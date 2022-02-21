@@ -24,8 +24,7 @@ file_to_load = os.path.join("C:/Users/usvisin3/OneDrive - PG (1)/12 Personal/Dat
 
 
 
-# Create a filename variable to a direct or indirect path to the file.
-file_to_save = os.path.join("C:/Users/usvisin3/OneDrive - PG (1)/12 Personal/Data Analytics Learning/election_analysis/Resources", "election_analysis.txt")
+
 # Using the open() function with the "w" mode we will write data to the file.
 # # Use the open statement to open the file as a text file.
 # outfile = open(file_to_save, "w")
@@ -41,17 +40,67 @@ file_to_save = os.path.join("C:/Users/usvisin3/OneDrive - PG (1)/12 Personal/Dat
 # To do: perform analysis.
 
 # Reading the file
+# Create a filename variable to a direct or indirect path to the file.
+file_to_save = os.path.join("C:/Users/usvisin3/OneDrive - PG (1)/12 Personal/Data Analytics Learning/election_analysis/Resources", "election_analysis.txt")
+
+# 1. Initialize a total vote counter.
+total_votes =0
+
+# Declare candidates list
+candidate_options = []
+
+# Dictionary to cout and add votes fir each candidate
+candidate_votes = {}
+
+#With statement to open the file and run though each record
 
 with open(file_to_load) as election_data:
     file_reader = csv_file.reader(election_data)
+    #Skipping the header
     header = next(file_reader)
-    print(header)
     
-    # for record in file_reader:
-    #     print(record)
+    for record in file_reader:
+        # Add to the total vote count.
+        total_votes += 1        
+        candidate_name = record[2]      
+        if(candidate_name not in candidate_options):
+            
+            # 1. Adding candidate name to list
+            candidate_options.append(candidate_name)
+            # 2. Begin tracking that candidate's vote count.
+            candidate_votes[candidate_name] = 1
+        else:
+            # 3. If teh candidate exists in list, just increment the counter by 1
+            candidate_votes[candidate_name] +=1
+    # Print the candidate list.
+    print(candidate_votes)
 
+    #Declaring variables for winning candidates
+    winning_candidate= ''
+    winning_count = 0
+    winning_percentgae = 0.00
+    for candidate in candidate_votes:
+        votes = candidate_votes[candidate]
+        # % of total votes
+        vote_percent = (float(votes)/float(total_votes))*100
 
+        if(votes > winning_count) and (vote_percent > winning_percentgae):
+            winning_candidate = candidate
+            winning_count = votes
+            winning_percentgae = vote_percent
+        
+        # 4. Print the candidate name and percentage of votes.
+        print(f"{candidate}: received {vote_percent:.2f}% of the vote. ({votes:,})")
 
+    # 5. Print the winning candidate name and percentage of votes.
+    #print(f"\nWinning candiate is : {winning_candidate} \nWining % :{winning_percentgae:.1f}%\nWinning # of votes : {winning_count:,}")
+    winning_candidate_summary = (
+    f"-------------------------\n"
+    f"Winner: {winning_candidate}\n"
+    f"Winning Vote Count: {winning_count:,}\n"
+    f"Winning Percentage: {winning_percentgae:.1f}%\n"
+    f"-------------------------\n")
+print(winning_candidate_summary)   
 
 # Close the file.
 election_data.close()
