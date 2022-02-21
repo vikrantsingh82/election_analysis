@@ -43,6 +43,11 @@ file_to_load = os.path.join("C:/Users/usvisin3/OneDrive - PG (1)/12 Personal/Dat
 # Create a filename variable to a direct or indirect path to the file.
 file_to_save = os.path.join("C:/Users/usvisin3/OneDrive - PG (1)/12 Personal/Data Analytics Learning/election_analysis/Resources", "election_analysis.txt")
 
+format_election_result = (
+    f"Election Results \n"
+    f"-------------------------")
+    
+
 # 1. Initialize a total vote counter.
 total_votes =0
 
@@ -75,6 +80,9 @@ with open(file_to_load) as election_data:
     # Print the candidate list.
     print(candidate_votes)
 
+    format_election_result = (f"{format_election_result}\nTotal Votes: {total_votes:,}\n"
+    f"-------------------------\n")
+
     #Declaring variables for winning candidates
     winning_candidate= ''
     winning_count = 0
@@ -89,8 +97,8 @@ with open(file_to_load) as election_data:
             winning_count = votes
             winning_percentgae = vote_percent
         
-        # 4. Print the candidate name and percentage of votes.
-        print(f"{candidate}: received {vote_percent:.2f}% of the vote. ({votes:,})")
+        # 4. Adding the text to format string to be wtitten to the file.
+        format_election_result = (f"{format_election_result}\n{candidate}: received {vote_percent:.2f}% of the vote. ({votes:,})\n")
 
     # 5. Print the winning candidate name and percentage of votes.
     #print(f"\nWinning candiate is : {winning_candidate} \nWining % :{winning_percentgae:.1f}%\nWinning # of votes : {winning_count:,}")
@@ -104,6 +112,16 @@ print(winning_candidate_summary)
 
 # Close the file.
 election_data.close()
+
+#Formatting for text file, writing the results in desired format
+format_election_result = (
+    f"{format_election_result}\n"
+    f"{winning_candidate_summary}")
+
+with open(file_to_save,"w") as text_file:
+    text_file.write(format_election_result)
+
+
 
 
 #print(dir(os.path))
