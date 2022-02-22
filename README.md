@@ -51,6 +51,7 @@ We would need to make following changes to the code to make this script usable f
 
 1. File paths to read the .CSV file and write the analysis text file should be changed to a central location 
 instead of local drive of computer.
+
 ![filepath](https://user-images.githubusercontent.com/98173091/155043360-111f2c5c-36f9-4610-8f68-5c25be7d26fe.png)
     
 
